@@ -1,8 +1,32 @@
 'use client'
 
+import { axios } from '@/helpers'
+import Vehicle from '@/types/vehicle'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function Page() {
+    const [vehicles, setVehicles] = useState<Vehicle[]>([])
+
+    useEffect(() => {
+        const fetchVehicles = async () => {
+            try {
+
+                const response = await axios.get('/vehicles')
+                if (response.status === 200) {
+                    console.log(response.data)
+                    setVehicles(response.data)
+                } else {
+                    //
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        fetchVehicles()
+    }, [])
+
     return (
         <div>
 
@@ -17,22 +41,17 @@ export default function Page() {
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>
-                            <Link href="/vehicles/123">Mobil</Link>
-                        </td>
-                        <td>
-                            <button type="button">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <Link href="/vehicles/556">Motor</Link>
-                        </td>
-                        <td>
-                            <button type="button">Delete</button>
-                        </td>
-                    </tr>
+                    {vehicles.map((vehicle) => (
+                        <tr key={vehicle.id}>
+                            <td>
+                                <Link href={`/vehicles/${vehicle.id}`}>{vehicle.name}</Link>
+                            </td>
+                            <td>
+                                <button type="button">Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+
                 </tbody>
             </table>
 
