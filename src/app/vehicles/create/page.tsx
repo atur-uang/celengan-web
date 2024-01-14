@@ -18,7 +18,7 @@ export default function Page() {
                 name: name
             })
 
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 // redirect to list view
                 router.push('/vehicles')
             } else {

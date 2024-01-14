@@ -14,8 +14,8 @@ export default function Page() {
 
                 const response = await axios.get('/vehicles')
                 if (response.status === 200) {
-                    console.log(response.data)
-                    setVehicles(response.data)
+                    console.log(response.data.data)
+                    setVehicles(response.data.data)
                 } else {
                     //
                 }
